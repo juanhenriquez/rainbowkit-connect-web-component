@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import PropTypes from "prop-types";
+import { WagmiConfig } from "wagmi";
+import { ConnectButton, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
-function App() {
+import { wagmiClient, chains } from "./lib/rainbow";
+
+function App({ name }: { name: string }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider chains={chains}>
+        <ConnectButton />
+      </RainbowKitProvider>
+    </WagmiConfig>
   );
 }
+
+App.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default App;
