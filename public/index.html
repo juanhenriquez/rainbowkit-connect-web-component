@@ -28,18 +28,22 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <finely-connect-wallet name="juan"></finely-connect-wallet>
+
+    <button id="open">open</button>
+
+    <finely-connect-wallet open="true"></finely-connect-wallet>
 
     <script>
+      const button = document.getElementById("open");
       const el = document.getElementsByTagName("finely-connect-wallet")[0];
 
-      el.addEventListener("connected", () => {
-        console.log("connected");
+      el.addEventListener("close", () => {
+        el.setAttribute("open", false);
       });
 
-      setTimeout(() => {
-        el.setAttribute("name", "Michel");
-      }, 5000);
+      button.addEventListener("click", () => {
+        el.setAttribute("open", true);
+      });
     </script>
     <!--
       This HTML file is a template.

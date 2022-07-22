@@ -1,5 +1,7 @@
 import { createRoot, Root } from "react-dom/client";
 
+import styles from "@juanhenriquez/rainbowkit/styles.css";
+
 import { EventProvider } from "./../context/EventContext";
 
 interface CreateWebComponentOptions {
@@ -17,6 +19,10 @@ export function createWebComponent(
     constructor() {
       super();
       const elementRoot = this.attachShadow({ mode: "open" });
+      const styleTag = document.createElement("style");
+      styleTag.innerHTML = styles;
+      this.shadowRoot.appendChild(styleTag);
+
       this.root = createRoot(elementRoot);
       this.observer = new MutationObserver(() => this.update());
       this.observer.observe(this, { attributes: true });
@@ -45,7 +51,7 @@ export function createWebComponent(
 
       this.root.render(
         <EventProvider value={this.eventDispatcher}>
-          <Component {...props} />
+          <Component {...props} container={this.shadowRoot} />
         </EventProvider>
       );
     }
